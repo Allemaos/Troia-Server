@@ -40,6 +40,7 @@ import com.datascience.gal.CorrectLabel;
 import com.datascience.gal.DawidSkene;
 import com.datascience.gal.IncrementalDawidSkene;
 import com.datascience.gal.MisclassificationCost;
+import com.datascience.gal.quality.DataQualityEstimator;
 
 /**
  * a simple web service wrapper for the get another label project
@@ -51,6 +52,7 @@ public class Service {
     @Context
     ServletContext context;
 
+    private static String DEFAULT_JOB_ID = "0";
     private static Logger logger = Logger.getLogger(Service.class);
 
     private static DawidSkeneCache dscache = null;
@@ -964,6 +966,33 @@ public class Service {
         return Response.status(500).build();
     }
 
+    private String getJobId(String jid){
+        if (jid == null || jid == "") {
+            logger.info("No job ID or empty - using default");
+            return DEFAULT_JOB_ID;
+        }
+        return jid;
+    }
+    
+    @GET
+    @Path("getEstimatedCost")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEstimatedCost(@QueryParam("id") String jid, @QueryParam("method") String method, @QueryParam("object") String object) {
+        String id = getJobId(jid);
+        String message = "Calculating " + method + " for " + object + " in job " + id;
+        try {
+            setup(context);
+            DawidSkene ds = dscache.getDawidSkene(id);
+            DataQualityEstimator dqe = new DataQualityEstimator();
+            Double ec = dqe.estimateMissclassificationCost(ds, method, object);
+            logger.info(message + " OK");
+            return Response.ok(ec.toString()).build();
+        } catch (Exception e) {
+            logger.error(message + " FAILED: " + e.getLocalizedMessage());
+        }
+        return Response.status(500).build();
+    }
+    
     private void setup(ServletContext scontext) throws IOException,
             ClassNotFoundException, SQLException {
         if (dscache == null) {
@@ -975,5 +1004,4 @@ public class Service {
             dscache = new DawidSkeneCache(props);
         }
     }
-
 }

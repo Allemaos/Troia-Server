@@ -14,6 +14,7 @@ SMALLER:
 - We have class Category - which is not used everywhere (sometimes it is replaced with string) - we should be more consequent
 - is there any difference between **label** and **category**? if not why do we use two different names for one thing?
 - We have in Datum assigned labels - why don't make another class that stores datum and label that are assaigned to it - Datum is object that make sense without labels
+- confusion matrix - we have interface(?) - and we don't use it in DawidSkene - that way we do some
 
 
 IN 

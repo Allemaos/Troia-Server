@@ -1,20 +1,12 @@
 package com.datascience.gal.quality;
 
+import com.datascience.gal.AbstractDawidSkene;
+import com.datascience.gal.Datum;
+
 public interface MisclassificationCostCalculator {
     
-    /*
-     * TODO add docs
-     */
-    public double expectedCost();
+    public double objectMisclassificationCost(Datum datum, AbstractDawidSkene ads);
     
-    /*
-     * TODO add docs
-     */
-    public double minimalizedCost();
-    
-    /*
-     * TODO add docs
-     */
-    public double softCost();
+    public double overallMisclassificationCost(AbstractDawidSkene ads);
 
 }
