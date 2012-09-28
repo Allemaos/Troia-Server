@@ -1,6 +1,7 @@
 package com.datascience.utils;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 @SuppressWarnings("serial")
 public class HashableObjectsProbabilityDistribution<T> extends
