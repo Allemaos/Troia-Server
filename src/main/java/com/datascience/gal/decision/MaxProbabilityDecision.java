@@ -4,20 +4,19 @@ import java.util.Map;
 
 import com.datascience.utils.CostMatrix;
 
-public class MaxProbabilityDecision extends SampleLabelDecisionAlgorithm{
+public abstract class MaxProbabilityDecision extends ObjectLabelDecisionAlgorithm{
 
 	@Override
 	public String predictLabel(Map<String, Double> labelProbabilities,
 			CostMatrix<String> costMatrix) {
-		// TODO Auto-generated method stub
-		return null;
+	    String mostProbableLabel = null;
+	    double mostProbableLabelprob = Double.MIN_VALUE;
+	    for (Map.Entry<String, Double> entry: labelProbabilities.entrySet()){
+	        if (entry.getValue() > mostProbableLabelprob){
+	            mostProbableLabel = entry.getKey();
+	            mostProbableLabelprob = entry.getValue();
+	        }
+	    }
+		return mostProbableLabel;
 	}
-
-	@Override
-	public Double predictedLabelCost(Map<String, Double> labelProbabilities,
-			CostMatrix<String> costMatrix) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

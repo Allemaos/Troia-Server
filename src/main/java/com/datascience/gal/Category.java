@@ -57,6 +57,10 @@ public class Category {
     public double getCost(String to) {
         return misclassification_cost.get(to);
     }
+    
+    public Map<String, Double> getMisclassificationCosts(){
+        return misclassification_cost;
+    }
 
     /**
      * @return the prior

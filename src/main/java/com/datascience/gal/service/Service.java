@@ -33,6 +33,7 @@ import org.apache.commons.lang.time.StopWatch;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
+import com.datascience.core.DataQualityEstimator;
 import com.datascience.gal.AssignedLabel;
 import com.datascience.gal.BatchDawidSkene;
 import com.datascience.gal.Category;
@@ -40,7 +41,6 @@ import com.datascience.gal.CorrectLabel;
 import com.datascience.gal.DawidSkene;
 import com.datascience.gal.IncrementalDawidSkene;
 import com.datascience.gal.MisclassificationCost;
-import com.datascience.gal.quality.DataQualityEstimator;
 
 /**
  * a simple web service wrapper for the get another label project

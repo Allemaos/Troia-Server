@@ -4,11 +4,10 @@ import java.util.Map;
 
 import com.datascience.utils.CostMatrix;
 
-
 /**
  * @author Konrad Kurdej
  */
-public class MinCostDecisionAlgorithm extends SampleLabelDecisionAlgorithm{
+public class MinCostDecisionAlgorithm extends ObjectLabelDecisionAlgorithm{
 
 	@Override
 	public String predictLabel(Map<String, Double> labelProbabilities,
