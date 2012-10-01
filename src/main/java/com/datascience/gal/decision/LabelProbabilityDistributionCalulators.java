@@ -9,6 +9,9 @@ import com.datascience.gal.AssignedLabel;
 import com.datascience.gal.Category;
 import com.datascience.gal.Datum;
 
+/**
+ * @author Konrad Kurdej
+ */
 public class LabelProbabilityDistributionCalulators {
     // This classes should be in proper classes like MajorityVote, Dawid Skene etc.
     

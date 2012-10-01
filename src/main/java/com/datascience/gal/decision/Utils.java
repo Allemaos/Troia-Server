@@ -8,6 +8,9 @@ import com.datascience.gal.AbstractDawidSkene;
 import com.datascience.gal.Category;
 import com.datascience.utils.CostMatrix;
 
+/**
+ * @author Konrad Kurdej
+ */
 public class Utils {
 
     static public Double calculateLabelCost(String calcLabel,

@@ -4,6 +4,9 @@ import java.util.Map;
 
 import com.datascience.utils.CostMatrix;
 
+/**
+ * @author Konrad Kurdej
+ */
 public abstract class MaxProbabilityDecision extends ObjectLabelDecisionAlgorithm{
 
 	@Override
