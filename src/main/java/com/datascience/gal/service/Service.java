@@ -979,7 +979,7 @@ public class Service {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEstimatedCost(@QueryParam("id") String jid, @QueryParam("method") String method, @QueryParam("object") String object) {
         String id = getJobId(jid);
-        String message = "Calculating " + method + " for " + object + " in job " + id;
+        String message = "getEstimatedCost(" + method + ") for " + object + " in job " + id;
         try {
             setup(context);
             DawidSkene ds = dscache.getDawidSkene(id);
@@ -988,7 +988,7 @@ public class Service {
             logger.info(message + " OK");
             return Response.ok(ec.toString()).build();
         } catch (Exception e) {
-            logger.error(message + " FAILED: " + e.getLocalizedMessage());
+            logger.error(message + " " + e.getLocalizedMessage());
         }
         return Response.status(500).build();
     }
