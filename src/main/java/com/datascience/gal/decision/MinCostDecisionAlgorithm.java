@@ -15,7 +15,7 @@ public class MinCostDecisionAlgorithm extends ObjectLabelDecisionAlgorithm{
 		String minCostLabel = null;
 		double minCostLabelCost = Double.MAX_VALUE;
 		for (String label: labelProbabilities.keySet()){
-			double cost = calculateLabelCost(label, labelProbabilities, costMatrix);
+			double cost = Utils.calculateLabelCost(label, labelProbabilities, costMatrix);
 			if (cost < minCostLabelCost){
 				minCostLabel = label;
 				minCostLabelCost = cost;
@@ -28,6 +28,6 @@ public class MinCostDecisionAlgorithm extends ObjectLabelDecisionAlgorithm{
 	public Double predictedLabelCost(Map<String, Double> labelProbabilities,
 			CostMatrix<String> costMatrix) {
 		String predictedLabel = predictLabel(labelProbabilities, costMatrix);
-		return calculateLabelCost(predictedLabel, labelProbabilities, costMatrix);
+		return Utils.calculateLabelCost(predictedLabel, labelProbabilities, costMatrix);
 	}
 }

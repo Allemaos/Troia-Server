@@ -24,7 +24,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-
 public class Datum {
     public static final DatumDeserializer deserializer = new DatumDeserializer();
     String name;

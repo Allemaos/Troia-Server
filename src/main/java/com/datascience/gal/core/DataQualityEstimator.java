@@ -1,4 +1,4 @@
-package com.datascience.core;
+package com.datascience.gal.core;
 
 import java.util.HashMap;
 import java.util.Map;
