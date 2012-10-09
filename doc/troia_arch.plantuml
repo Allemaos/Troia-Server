@@ -1,0 +1,45 @@
+@startuml
+
+title Troia architecture proposal
+
+
+package "Core" {
+    class Label
+    class Worker
+    class Object
+}
+
+package "Crowdsourcing Quality Algorithm" {
+    interface DataStorage {
+        getObjects()
+        addWorkerLabel()
+        .. etc ..
+    }
+
+    abstract Model {
+        represents model created by
+        algorithm to store its state
+    }
+
+    interface LabelProbabilityDistributionCalculator {
+        calculateLabelProbabilityDistribution(model, label)
+    }
+}
+
+
+note "Implemented by DBDataStorage, FileDataStorage etc" as NoteDataStorage
+DataStorage .. NoteDataStorage
+
+
+package "Utils" {
+    class CostMatrix<T>
+    class ProbabilityDistribution<T>
+}
+
+note "Implements Map like API that T -> Double\nalso makes iteration over pair <T, Double>\nFor elements not present it returns 0 probability" as NoteProbabilityDistribution
+note "Clear names like <B>trueValue</B>, <B>predictedValue</B>" as NoteCostMatrix
+
+ProbabilityDistribution .. NoteProbabilityDistribution
+CostMatrix .. NoteCostMatrix
+
+@enduml
