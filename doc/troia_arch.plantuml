@@ -1,34 +1,32 @@
 @startuml
 
+
 title Troia architecture proposal
+
+note "We should try to avoid passing objects like Map/Set.\nInstead we should try to make corresponding classes that would have some semantic information about such mapping" as OveralNote
 
 
 package "Core" {
-    class Label
-    class Worker
-    class Object
+    class Label {
+        id/name
+    }
+    class Worker {
+        id/name
+    }
+    class Item {
+        id/name
+    }
+    Vote "1" o-- Label
+    Vote "1" o-- Worker
+    Vote "1" o-- Item
+
+    Item <|-- ItemWithKnownLabel
+    ItemWithKnownLabel <|-- GoldObject
+    ItemWithKnownLabel <|-- ValidationItem
 }
 
-package "Crowdsourcing Quality Algorithm" {
-    interface DataStorage {
-        getObjects()
-        addWorkerLabel()
-        .. etc ..
-    }
-
-    abstract Model {
-        represents model created by
-        algorithm to store its state
-    }
-
-    interface LabelProbabilityDistributionCalculator {
-        calculateLabelProbabilityDistribution(model, label)
-    }
-}
-
-
-note "Implemented by DBDataStorage, FileDataStorage etc" as NoteDataStorage
-DataStorage .. NoteDataStorage
+note "I'm not sure whether we should use State Pattern to make it possible to change suddenly to GoldObject" as NoteTroiaObject
+Item .. NoteTroiaObject
 
 
 package "Utils" {
@@ -42,4 +40,46 @@ note "Clear names like <B>trueValue</B>, <B>predictedValue</B>" as NoteCostMatri
 ProbabilityDistribution .. NoteProbabilityDistribution
 CostMatrix .. NoteCostMatrix
 
+
+package "Crowdsourcing Quality Algorithm" {
+    interface DataStorage {
+        getObjects()
+        addWorkerLabel()
+        .. etc ..
+    }
+
+    class WorkerData {
+        stores extra informations about Worker
+    }
+    WorkerData *-- Worker
+
+    abstract Model {
+        represents model created by
+        algorithm to store its state
+    }
+
+    interface LabelProbabilityDistributionCalculator {
+        calculateLabelProbabilityDistribution(model, storage, object)
+    }
+}
+
+
+note "Implemented by DBDataStorage, FileDataStorage etc" as NoteDataStorage
+DataStorage .. NoteDataStorage
+
+
+package TestGenerator {
+    class RandomWorker {
+        and many subclasses corresponding
+        to some distribution etc.
+    }
+    RandomWorker --|> Worker
+
+}
+
+package RESTService {
+    abstract class Serializer
+    Serializer <|-- JSONSerializer
+    Serializer <|-- AvroSerializer
+}
 @enduml
