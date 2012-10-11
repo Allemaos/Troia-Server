@@ -6,10 +6,15 @@ title Troia architecture proposal
 note "We should try to avoid passing objects like Map/Set.\nInstead we should try to make corresponding classes that would have some semantic information about such mapping" as OveralNote
 
 
-package "Core" {
-    class Label {
-        id/name
+package "core.elements" {
+    abstract class Label {
+        boolean equals(Label other)
+        int hash()
+        double difference(Label other)
     }
+    Label <|-- NominalLabel
+    Label <|-- ContinousLabel
+
     class Worker {
         id/name
     }
@@ -21,7 +26,7 @@ package "Core" {
     Vote "1" o-- Item
 
     Item <|-- ItemWithKnownLabel
-    ItemWithKnownLabel <|-- GoldObject
+    ItemWithKnownLabel <|-- GoldItem
     ItemWithKnownLabel <|-- ValidationItem
 }
 
@@ -29,9 +34,28 @@ note "I'm not sure whether we should use State Pattern to make it possible to ch
 Item .. NoteTroiaObject
 
 
-package "Utils" {
+package "core.algorithms" {
+    interface LabelCostCalculator {
+        calculateLabelCost(Label, ProbabilityDistribution<Label>, CostMatrix<Label>)
+    }
+
+    interface LabelChoosingAlgorithm {
+        chooseLabel(ProbabilityDistribution<Label>, CostMatrix<Label>)
+    }
+
+    MinCostLabelChoosingAlgorithm o-- LabelCostCalculator
+    MinCostLabelChoosingAlgorithm --|> LabelChoosingAlgorithm
+    MaxProbabilityLabel --|> LabelChoosingAlgorithm
+
+}
+
+package "math.utils" {
     class CostMatrix<T>
     class ProbabilityDistribution<T>
+    class ProbabilityDistributionGenerators<T>{
+        {static} ProbabilityDistribution<T> uniform(Collection<T>)
+        {static} ProbabilityDistribution<T> constant(Collection<T>, Double)
+    }
 }
 
 note "Implements Map like API that T -> Double\nalso makes iteration over pair <T, Double>\nFor elements not present it returns 0 probability" as NoteProbabilityDistribution
@@ -82,4 +106,5 @@ package RESTService {
     Serializer <|-- JSONSerializer
     Serializer <|-- AvroSerializer
 }
+
 @enduml
