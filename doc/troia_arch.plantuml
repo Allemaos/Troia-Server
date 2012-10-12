@@ -90,6 +90,7 @@ package "crowdsourcingQuality.core" {
     CrowdsourcingQualityAlgorithm o-- LabelProbabilityDistributionCalculator
     CrowdsourcingQualityAlgorithm o-- LabelChoosingAlgorithm
     CrowdsourcingQualityAlgorithm o-- CrowdsourcingQualityAlogirhtmModel
+    CrowdsourcingQualityAlogirhtmModel "*" o-- WorkerData
 }
 
 abstract class DawidSkene
