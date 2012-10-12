@@ -17,7 +17,7 @@ That way we can use different ways of serialization seamlessly.
 Often in REST services we are able to specify expected output format like JSON, XML etc.
 
 
-Design general Service and subclasses for specific algorithms
+Design general Service and its subclasses for specific algorithms
 -------------------------------------------------------------
 This would allow us to minimize code duplication.
 
@@ -29,10 +29,11 @@ Core components
 ~~~~~~~~~~~~~~~
 We should create core classes like Label/Label, Item (Object is reserved..), make their methods for comparison and hashing and use them!
 Avoid using Strings that represent them - just use that objects.
-This will make code usage easier
+This will make code usage easier.
 
 Useful things
 ~~~~~~~~~~~~~
+Also we should avoid passing Map - if they have some semantic than we should create proper class for this.
 We should have classes like:
 
 - ElementWithProbability<T> - pair of <T, Double>
@@ -40,6 +41,10 @@ We should have classes like:
 - ConfusionMatrix<T> - BTW many operations put there should be taken outside it ... Its API is so huge...
 - CostMatrix<T> - already I have added this
 
+Separate repo for core things
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Separate repository with core/useful stuff like math, workers etc. In all repository there is implemented Worker, Label, ProbabilityDistribution, CostMatrix, ConfusionMatrix etc..
+Like **crowdsourcing_utils**
 
 Comments
 ~~~~~~~~
