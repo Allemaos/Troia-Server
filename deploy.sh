@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT=~/troia/Troia-Server
+PROJECT=./
 TOMCAT=~/apache-tomcat-6.0.33/
 SETTINGS=~/.troia_settings
 
