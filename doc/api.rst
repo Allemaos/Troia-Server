@@ -118,3 +118,60 @@ URL/api/v1
           |--> /quality
           |--> /predictions
                   |-->
+
+
+NEW
+
+Entry: URL/api/v1/
+
+We need to enable some authorization - without that this service is useless for many companies
+
+We assume that you are authorized when you make requests
+
+GET /ping <- should return system status: its time and whether it can connect to DB/storage
+
+
+GET /jobs/ <- lists all your jobs
+GET /jobs/id:/ <- returns base info about job - when it was created etc and links to more data?
+
+GET /jobs/id:/status/
+
+GET /jobs/id:/costMatrix
+
+GET /jobs/id:/labels/ <- list all labels
+GET /jobs/id:/labels/label_id:/ <- some stats about this label like how much votes use it?
+
+GET /jobs/id:/workers/ <- list all workers that voted in this job
+GET /jobs/id:/workers/worker_id:/ <- some stats about worker
+
+GET /jobs/id:/items/ <- list all items for which we have votes (all items are included: gold, validation etc)
+GET /jobs/id:/items/item_id:/ <- all votes that we were given to this item and possibly algorithms decision about label for this item?
+
+GET /jobs/id:/goldItems/ <- similar to items
+GET /jobs/id:/goldItems/item_id:/ <- similar to items
+GET /jobs/id:/validationItems/ <- similar to items
+GET /jobs/id:/validationItems/item_id:/ <- similar to items
+
+GET /jobs/id:/votes/ <- list all votes
+
+GET /jobs/id:/prediction/algorithm:/items/ <- lists all object with their predicted labels
+GET /jobs/id:/prediction/algorithm:/items/item_id:/ <- return more detailed info like labels probability distribution etc. Can be specific to given algorithm
+GET /jobs/id:/prediction/algorithm:/items/item_id:/estimatedCost <- calculates estimated cost, takes method as argument
+
+GET /jobs/id:/prediction/algorithm:/workers/worker_id:/ <- returns worker quality related data
+
+
+POST /jobs/ <- create job with some random id and return this id similar to next one
+POST /jobs/id:/ <- create new job with given id and with specified parameters
+POST /jobs/id:/reset
+
+POST /jobs/id:/costMatrix <- sends cost matrix
+POST /jobs/id:/votes/ <- add votes to system - we have only version that adds multiple votes - possibly only one
+
+POST /jobs/id:/prediction/algorithm:/calculate <- starts calculation for this project, takes parameters specific to used algorithm like number of iterations etc
+POST /jobs/id:/prediction/algorithm:/
+
+
+DELETE /jobs/id:/ <- deletes job
+
+NOTE: Do we want to be able to remove some votes?
