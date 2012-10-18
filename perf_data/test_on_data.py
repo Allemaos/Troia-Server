@@ -49,7 +49,7 @@ def transform_cost(cost):
 
 def test_all(dsas, correct, cost, inputt):
 
-    ID = "123"
+    ID = "SECRET123"
     
     dsas.ping()
     dsas.reset(ID)

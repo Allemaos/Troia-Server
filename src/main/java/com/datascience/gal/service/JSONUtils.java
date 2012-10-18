@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.datascience.gal.AssignedLabel;
 import com.datascience.gal.Category;
 import com.datascience.gal.CategoryPair;
@@ -116,6 +118,14 @@ public class JSONUtils {
 	}
 
 	public static String toJson(Object src) {
-		return gson.toJson(src);
+		Logger logger = Logger.getLogger(Service.class);
+		long curr = System.currentTimeMillis();
+		long heapSize = Runtime.getRuntime().totalMemory();
+		String ret = gson.toJson(src);
+		curr = System.currentTimeMillis() - curr;
+		heapSize = Runtime.getRuntime().totalMemory() - heapSize;
+		logger.info("Serialization of: " + src.getClass().getName() + " took: " + (curr / 1000.) + 
+				" resulted object len: " + ret.length() + " and size: " + heapSize);
+		return ret;
 	}
 }
