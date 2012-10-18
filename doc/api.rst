@@ -19,10 +19,10 @@ We need to enable some authorization - without that this service is useless for 
 Methods
 -------
 
-We assume that you are authorized when you make requests
-
 GET /ping <- should return system status: its time and whether it can connect to DB/storage
 
+
+We assume that you are authorized when you make following requests.
 
 GET /jobs/ <- lists all your jobs
 GET /jobs/id:/ <- returns base info about job - when it was created etc and links to more data?
