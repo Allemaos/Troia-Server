@@ -38,6 +38,8 @@ import com.google.gson.reflect.TypeToken;
  *
  */
 public class JSONUtils {
+	private static final Logger logger = Logger.getLogger("troia.performance");
+	
 	public static final Gson gson;
 
 	public static final Type assignedLabelSetType = new TypeToken<Collection<AssignedLabel>>() {
@@ -118,14 +120,13 @@ public class JSONUtils {
 	}
 
 	public static String toJson(Object src) {
-		Logger logger = Logger.getLogger(Service.class);
 		long curr = System.currentTimeMillis();
 		long heapSize = Runtime.getRuntime().totalMemory();
 		String ret = gson.toJson(src);
 		curr = System.currentTimeMillis() - curr;
 		heapSize = Runtime.getRuntime().totalMemory() - heapSize;
-		logger.info("Serialization of: " + src.getClass().getName() + " took: " + (curr / 1000.) + 
-				" resulted object len: " + ret.length() + " and size: " + heapSize);
+		logger.info("JSONing: " + src.getClass().getSimpleName() + " took: " + (curr / 1000.) + 
+				"s len: " + ret.length() + " size: " + heapSize);
 		return ret;
 	}
 }
