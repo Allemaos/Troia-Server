@@ -176,6 +176,7 @@ public class Service {
 		} catch(Exception e) {
 			logErrorFromException(e);
 		}
+		logger.info("Initialized Service servlet.");
 	}
 
 	/**
