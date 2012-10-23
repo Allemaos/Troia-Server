@@ -48,6 +48,8 @@ def run_simulation(opts):
             (random.choice(workers), random.choice(objects), random.choice(labels)) for _ in xrange(opts.it)
             ]
     dsas.load_worker_assigned_labels(assigns, opts.ID)
+    #dsas.compute(10, opts.ID)
+    dsas.compute_blocking(10, opts.ID)
 
 
 def parse_commandline(argv):
