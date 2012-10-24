@@ -3,7 +3,7 @@ import sys
 import csv
 import random
 
-LABELS = ["correct", "incorrect"]
+from common import LABELS, TEST_CASES
 
 
 def gen_items(n_workers, n_objects, n_golds):
@@ -21,7 +21,7 @@ def generate_data(iterations):
     n_golds = n_objects / 20
     workers, objects, golds = gen_items(n_workers, n_objects, n_golds)
     objects += golds
-    labels = ["correct", "incorrect"]
+    labels = LABELS
     assigns = [
         (random.choice(workers), random.choice(objects), random.choice(labels))
         for _ in xrange(iterations)
@@ -53,8 +53,7 @@ def generate_set_and_save(folder, iterations):
 
 def main(argv):
     folder = argv[0]
-    iterss = [pref * (10 ** zeroes) for pref in [1, 5]
-            for zeroes in [2, 3, 4, 5]]
+    iterss = TEST_CASES
     for iters in iterss:
         generate_set_and_save(folder, iters)
 
