@@ -1,9 +1,8 @@
 import os
 import sys
-import csv
 import random
 
-from common import LABELS, TEST_CASES
+from common import LABELS, TEST_CASES, save_csv
 
 
 def gen_items(n_workers, n_objects, n_golds):
@@ -29,12 +28,6 @@ def generate_data(iterations):
     costs = [(labels[i], labels[j], 1 - int(i == j))
         for i in xrange(2) for j in xrange(2)]
     return costs, golds, assigns
-
-
-def save_csv(path, data):
-    with open(path, 'w') as F:
-        writer = csv.writer(F, delimiter='\t')
-        writer.writerows(data)
 
 
 def save_data(folder, costs, golds, assigns):
