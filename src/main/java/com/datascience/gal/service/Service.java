@@ -112,7 +112,7 @@ public class Service {
 
 	private static void handleException(String endpointName, String message,
 										Exception e) {
-		    message = endpointName + " with " + message;
+		message = endpointName + " with " + message;
 		handleException(message, e);
 	}
 

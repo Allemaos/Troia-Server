@@ -47,8 +47,8 @@ public class DawidSkeneProcessorManager extends Thread {
 	 *            check if there is porcessor ready for execution
 	 */
 	public DawidSkeneProcessorManager(int threadPoolSize, int sleepPeriod,
-			String user, String password, String db, String url, int cachesize)
-			throws ClassNotFoundException, SQLException, IOException {
+									  String user, String password, String db, String url, int cachesize)
+	throws ClassNotFoundException, SQLException, IOException {
 		this.processorQueue = new HashMap<String, Queue<DawidSkeneProcessor>>();
 		this.executor = Executors.newFixedThreadPool(threadPoolSize);
 		this.stopped = false;
@@ -57,8 +57,8 @@ public class DawidSkeneProcessorManager extends Thread {
 	}
 
 	public DawidSkeneProcessorManager(int threadPoolSize, int sleepPeriod,
-			String user, String password, String db, String url)
-			throws ClassNotFoundException, SQLException, IOException {
+									  String user, String password, String db, String url)
+	throws ClassNotFoundException, SQLException, IOException {
 		this.processorQueue = new HashMap<String, Queue<DawidSkeneProcessor>>();
 		this.executor = Executors.newFixedThreadPool(threadPoolSize);
 		this.stopped = false;
@@ -81,12 +81,12 @@ public class DawidSkeneProcessorManager extends Thread {
 	}
 
 	public void createProject(String projectId,
-			Collection<Category> categories, boolean incremental) {
+							  Collection<Category> categories, boolean incremental) {
 		synchronized (this.processorQueue) {
 			this.cache.createDawidSkene(projectId, this, categories,
-					incremental);
+										incremental);
 			this.processorQueue.put(projectId,
-					new ConcurrentLinkedQueue<DawidSkeneProcessor>());
+									new ConcurrentLinkedQueue<DawidSkeneProcessor>());
 		}
 	}
 
@@ -112,20 +112,20 @@ public class DawidSkeneProcessorManager extends Thread {
 	}
 
 	public void addGoldLabels(String projectId,
-			Collection<CorrectLabel> goldLabels) {
+							  Collection<CorrectLabel> goldLabels) {
 		GoldLabelWriter writer = new GoldLabelWriter(projectId, this.cache,
 				goldLabels);
 		this.addProcessor(writer);
 	}
-	
+
 	public void addEvaluationData(String projectId,
-			Collection<CorrectLabel> goldLabels) {
+								  Collection<CorrectLabel> goldLabels) {
 		EvaluationDataWriter writer = new EvaluationDataWriter(projectId, this.cache,
 				goldLabels);
 		this.addProcessor(writer);
 	}
-	
-	public void addMisclassificationCost(String projectId,Collection<MisclassificationCost> costs){
+
+	public void addMisclassificationCost(String projectId,Collection<MisclassificationCost> costs) {
 		MisclassificationCostsWriter writer = new MisclassificationCostsWriter(projectId,this.cache,costs);
 		this.addProcessor(writer);
 	}
@@ -138,14 +138,14 @@ public class DawidSkeneProcessorManager extends Thread {
 
 	public void updateDawidSkene(String projectId, DawidSkene updatedDS) {
 		CacheUpdater updater = new CacheUpdater(projectId, this.cache,
-				updatedDS);
+												updatedDS);
 		this.addProcessor(updater);
 	}
 
-	public void calculateEvaluationCost(String method){
-		
+	public void calculateEvaluationCost(String method) {
+
 	}
-	
+
 	public final DawidSkene getDawidSkeneForReadOnly(String projectId) {
 		Queue<DawidSkeneProcessor> processors;
 		DawidSkene ds = null;
@@ -154,7 +154,7 @@ public class DawidSkeneProcessorManager extends Thread {
 			if (processors == null
 					|| processors.size() == 0
 					|| !processors.peek().getState()
-							.equals(DawidSkeneProcessorState.RUNNING)) {
+					.equals(DawidSkeneProcessorState.RUNNING)) {
 				ds = this.cache.getDawidSkeneForReadOnly(projectId,
 						Thread.currentThread());
 			}
@@ -168,7 +168,7 @@ public class DawidSkeneProcessorManager extends Thread {
 				synchronized (this.processorQueue) {
 					if (processors.size() == 0
 							|| !processors.peek().getState()
-									.equals(DawidSkeneProcessorState.RUNNING)) {
+							.equals(DawidSkeneProcessorState.RUNNING)) {
 						ds = this.cache.getDawidSkeneForReadOnly(projectId,
 								Thread.currentThread());
 						break;
@@ -179,15 +179,15 @@ public class DawidSkeneProcessorManager extends Thread {
 
 		return ds;
 	}
-	
-	public void finalizeReading(String projectId){
+
+	public void finalizeReading(String projectId) {
 		this.cache.finalizeReading(projectId,Thread.currentThread());
-        logger.debug("Reading finalized.");
+		logger.debug("Reading finalized.");
 	}
 
 	/**
 	 * This function adds a new processor to manager
-	 * 
+	 *
 	 * @param processor
 	 *            Processor that's going to be added to manager
 	 */
@@ -195,12 +195,12 @@ public class DawidSkeneProcessorManager extends Thread {
 		synchronized (this.processorQueue) {
 			if (processor.getState().equals(DawidSkeneProcessorState.CREATED)) {
 				if (!this.processorQueue.containsKey(processor
-						.getDawidSkeneId())) {
+													 .getDawidSkeneId())) {
 					this.processorQueue.put(processor.getDawidSkeneId(),
-							new ConcurrentLinkedQueue<DawidSkeneProcessor>());
+											new ConcurrentLinkedQueue<DawidSkeneProcessor>());
 				}
 				this.processorQueue.get(processor.getDawidSkeneId()).add(
-						processor);
+					processor);
 				processor.setState(DawidSkeneProcessorState.IN_QUEUE);
 				logger.info("Added new processor to queue");
 				this.interrupt();
@@ -212,7 +212,7 @@ public class DawidSkeneProcessorManager extends Thread {
 		int processorCount = 0;
 		synchronized (this.processorQueue) {
 			Queue<DawidSkeneProcessor> queue = this.processorQueue
-					.get(projectId);
+											   .get(projectId);
 			if (queue != null) {
 				processorCount = queue.size();
 			}
@@ -225,10 +225,10 @@ public class DawidSkeneProcessorManager extends Thread {
 			Collection<String> projects = this.processorQueue.keySet();
 			for (String project : projects) {
 				Queue<DawidSkeneProcessor> queue = this.processorQueue
-						.get(project);
+												   .get(project);
 				if (queue.peek() != null
 						&& !queue.peek().getState()
-								.equals(DawidSkeneProcessorState.RUNNING)) {
+						.equals(DawidSkeneProcessorState.RUNNING)) {
 					if (queue.peek().getState()
 							.equals(DawidSkeneProcessorState.FINISHED)) {
 						queue.poll();
@@ -259,7 +259,7 @@ public class DawidSkeneProcessorManager extends Thread {
 	 *            Map that holds queues of processors for each project
 	 */
 	public void setProcessorQueue(
-			Map<String, Queue<DawidSkeneProcessor>> processorQueue) {
+		Map<String, Queue<DawidSkeneProcessor>> processorQueue) {
 		this.processorQueue = processorQueue;
 	}
 
@@ -333,5 +333,5 @@ public class DawidSkeneProcessorManager extends Thread {
 	private List<Thread> readerThreads;
 
 	private static Logger logger = Logger
-			.getLogger(DawidSkeneProcessorManager.class);
+								   .getLogger(DawidSkeneProcessorManager.class);
 }
