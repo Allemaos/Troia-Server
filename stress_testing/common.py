@@ -1,8 +1,9 @@
 import csv
+import time
 
 
-TEST_CASES = [pref * (10 ** zeroes) for pref in [1, 5]
-        for zeroes in [2, 3, 4, 5]]
+TEST_CASES = [pref * (10 ** zeroes) for zeroes in [2, 3, 4, 5, 6]
+        for pref in [1, 5]]
 
 LABELS = ["correct", "incorrect"]  # should be of length == 2
 
@@ -67,3 +68,9 @@ def prepare_troia_client(jid, folder):
     tc.load_categories(costs, jid)
     tc.load_gold_labels(correct, jid)
     return tc, inputt
+
+
+def timeit(f, *args, **kwargs):
+    start = time.time()
+    f(*args, **kwargs)
+    return time.time() - start
