@@ -37,19 +37,19 @@ GET /jobs/id:/labels/label_id:/ <- some stats about this label like how much vot
 GET /jobs/id:/workers/ <- list all workers that voted in this job
 GET /jobs/id:/workers/worker_id:/ <- some stats about worker
 
-GET /jobs/id:/items/ <- list all items for which we have votes (all items are included: gold, validation etc)
-GET /jobs/id:/items/item_id:/ <- all votes that we were given to this item and possibly algorithms decision about label for this item?
+GET /jobs/id:/datums/ <- list all items for which we have votes (all items are included: gold, validation etc)
+GET /jobs/id:/datums/datum_id:/ <- all assigns that we were given to this object and possibly algorithms decision about label for this item?
 
-GET /jobs/id:/goldItems/ <- similar to items
-GET /jobs/id:/goldItems/item_id:/ <- similar to items
-GET /jobs/id:/validationItems/ <- similar to items
-GET /jobs/id:/validationItems/item_id:/ <- similar to items
+GET /jobs/id:/goldDatums/ <- similar to datums
+GET /jobs/id:/goldDatums/item_id:/ <- similar to datums
+GET /jobs/id:/evaluationDatums/ <- similar to datums
+GET /jobs/id:/evaluationDatums/item_id:/ <- similar to datums
 
-GET /jobs/id:/votes/ <- list all votes
+GET /jobs/id:/assignedLabels/ <- list all workers assigns
 
-GET /jobs/id:/prediction/algorithm:/items/ <- lists all object with their predicted labels
-GET /jobs/id:/prediction/algorithm:/items/item_id:/ <- return more detailed info like labels probability distribution etc. Can be specific to given algorithm
-GET /jobs/id:/prediction/algorithm:/items/item_id:/estimatedCost <- calculates estimated cost, takes method as argument
+GET /jobs/id:/prediction/algorithm:/datums/ <- lists all object with their predicted labels
+GET /jobs/id:/prediction/algorithm:/datums/datum_id:/ <- return more detailed info like labels probability distribution etc. Can be specific to given algorithm
+GET /jobs/id:/prediction/algorithm:/datums/datum_id:/estimatedCost <- calculates estimated cost, takes method as argument
 
 GET /jobs/id:/prediction/algorithm:/workers/worker_id:/ <- returns worker quality related data
 
