@@ -41,9 +41,9 @@ GET /jobs/id:/datums/ <- list all items for which we have votes (all items are i
 GET /jobs/id:/datums/datum_id:/ <- all assigns that we were given to this object and possibly algorithms decision about label for this item?
 
 GET /jobs/id:/goldDatums/ <- similar to datums
-GET /jobs/id:/goldDatums/item_id:/ <- similar to datums
+GET /jobs/id:/goldDatums/datum_id:/ <- similar to datums
 GET /jobs/id:/evaluationDatums/ <- similar to datums
-GET /jobs/id:/evaluationDatums/item_id:/ <- similar to datums
+GET /jobs/id:/evaluationDatums/datum_id:/ <- similar to datums
 
 GET /jobs/id:/assignedLabels/ <- list all workers assigns
 
