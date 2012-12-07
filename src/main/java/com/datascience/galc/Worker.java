@@ -2,9 +2,9 @@ package com.datascience.galc;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
+import com.google.common.base.Objects;
 
-public class Worker implements Comparable<Worker> {
+public class Worker {
 
 	private String							name;
 
@@ -25,7 +25,7 @@ public class Worker implements Comparable<Worker> {
 	public Worker(String name) {
 
 		this.name = name;
-		this.labels = new TreeSet<AssignedLabel>();
+		this.labels = new HashSet<AssignedLabel>();
 	}
 
 	public void addAssignedLabel(AssignedLabel al) {
@@ -141,12 +141,6 @@ public class Worker implements Comparable<Worker> {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
-
-	@Override
-	public int compareTo(Worker o) {
-
-		return this.getName().compareTo(o.getName());
 	}
 
 	/*
